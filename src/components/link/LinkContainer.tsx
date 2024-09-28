@@ -1,4 +1,3 @@
-// import { Button } from "../ui/button";
 import LinkCard from "./LinkCard";
 import { Button } from "@/components/ui/button";
 import {
@@ -14,40 +13,23 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useEffect, useState } from "react";
 
-const LinkContainer = () => {
-  const [links, setLinks] = useState([]);
+// Define a type for the link structure
+interface Link {
+  id: number;
+  name: string;
+  url: string;
+}
+
+const LinkContainer: React.FC = () => {
+  const [links, setLinks] = useState<Link[]>([]); // Use the Link type for state
 
   useEffect(() => {
     // Fetch the JSON data from the public folder
     fetch("/links.json")
       .then((response) => response.json())
-      .then((data) => setLinks(data))
+      .then((data: Link[]) => setLinks(data)) // Type the fetched data
       .catch((error) => console.error("Error fetching links:", error));
   }, []);
-
-  const demoLinks = [
-    {
-      id: 1,
-      name: "Google",
-      url: "https://www.google.com",
-    },
-    {
-      name: "Facebook",
-      url: "https://www.facebook.com",
-    },
-    {
-      name: "Twitter",
-      url: "https://www.twitter.com",
-    },
-    {
-      name: "Instagram",
-      url: "https://www.instagram.com",
-    },
-    {
-      name: "LinkedIn",
-      url: "https://www.linkedin.com",
-    },
-  ];
 
   return (
     <div>
@@ -56,26 +38,10 @@ const LinkContainer = () => {
         <Dialog>
           <DialogTrigger asChild>
             <Button className="h-full font-bold text-xl">Create Link</Button>
-            {/* <Button variant="outline" className="h-full ">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={4}
-                stroke="currentColor"
-                className="size-6"
-              >
-                <path
-                  //   strokeLinecap="round"
-                  //   strokeLinejoin="round"
-                  d="M12 4.5v15m7.5-7.5h-15"
-                />
-              </svg>
-            </Button> */}
           </DialogTrigger>
 
-          {links.map((link, index) => (
-            <LinkCard key={index} name={link.name} url={link.url} />
+          {links.map((link) => (
+            <LinkCard key={link.id} name={link.name} url={link.url} /> // Use link.id as the key
           ))}
           <DialogContent className="sm:max-w-[425px]">
             <DialogHeader>
