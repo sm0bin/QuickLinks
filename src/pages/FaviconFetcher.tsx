@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 function FaviconFetcher() {
   const [url, setUrl] = useState(""); // User input URL
